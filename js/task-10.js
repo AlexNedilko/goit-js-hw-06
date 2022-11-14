@@ -20,6 +20,7 @@ const onCreateBtnClick = (event) => {
     const RandomColor = getRandomHexColor();
     console.log(i);
     if (i === 100) {
+      refs.input.value = "100";
       break;
     }
     let newBox = `<div style="width: ${20 + i * 10}px; height: ${

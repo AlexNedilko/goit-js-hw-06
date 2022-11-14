@@ -4,26 +4,40 @@ function getRandomHexColor() {
 
 const refs = {
   input: document.querySelector("input"),
-  create: document.querySelector("[data-create]"),
-  destroy: document.querySelector("[data-destroy]"),
+  createBtn: document.querySelector("[data-create]"),
+  destroyBtn: document.querySelector("[data-destroy]"),
 };
+
 const boxesRef = document.querySelector("#boxes");
-const RandomColor = getRandomHexColor();
 const newBoxes = [];
 
-const onCreateBtnClick = () => {
-  // for (let i = 0; (i = refs.input.value); i += 1) {
-  //   newBoxes.push(
-  //     `<div width = 20 + i*10; heigth = 20 + i * 10; color = ${RandomColor}>`
-  //   );
-  // const newBox = document.createElement("div");
-  // newBox.style.width = `20 + ${i}*10px`;
-  // newBox.style.height = `20 + ${i}*10px`;
-  // newBox.style.color = RandomColor;
-  // boxesRef.;
-  console.log(refs.input.value);
+const onCreateBtnClick = (event) => {
+  event.preventDefault();
+  newBoxes.pop();
+
+  const count = refs.input.value;
+  for (let i = 1; i <= count; i += 1) {
+    const RandomColor = getRandomHexColor();
+    console.log(i);
+    if (i === 100) {
+      break;
+    }
+    let newBox = `<div style="width: ${20 + i * 10}px; height: ${
+      20 + i * 10
+    }px; background: ${RandomColor};"></div>`;
+    newBoxes.push(newBox);
+  }
+
+  boxesRef.insertAdjacentHTML("afterbegin", newBoxes.join(""));
+  console.log(newBoxes);
 };
 
-refs.create.addEventListener("click", onCreateBtnClick);
+const onDestroyBtnClick = (event) => {
+  newBoxes.splice(0, newBoxes.length);
+  boxesRef.innerHTML = "";
+  refs.input.value = "0";
+  console.log(newBoxes);
+};
 
-// console.log(refs.input.value);
+refs.destroyBtn.addEventListener("click", onDestroyBtnClick);
+refs.createBtn.addEventListener("click", onCreateBtnClick);
